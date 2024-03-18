@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    inetutils:
+      timeout-seconds: 10
+logging:
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss
+    console: ${CONSOLE_LOG_PATTERN:%clr(%d{${LOG_DATEFORMAT_PATTERN:yyyy-MM-dd HH:mm:ss}}){cyan} %clr(${LOG_LEVEL_PATTERN:[%5p]}) %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}}
+  level:
+    com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: WARN
+  config: classpath:logback-spring.xml

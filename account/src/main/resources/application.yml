@@ -1,0 +1,12 @@
+server:
+  port: 9088
+  servlet:
+    context-path: /account-center
+spring:
+  application:
+    name: account
+  datasource:
+    url: jdbc:mysql://192.168.3.2:3306/archimedes?serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.zaxxer.hikari.HikariDataSource
+    username: root
+    password: sakula424KA!@#
