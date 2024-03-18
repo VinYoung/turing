@@ -7,27 +7,21 @@ package vip.vinyoung.tools.annotation.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+import vip.vinyoung.tools.config.ValicationConstants;
+import vip.vinyoung.tools.validator.PasswordValidator;
 
 import java.lang.annotation.*;
 
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
-@Repeatable(Password.List.class)
 @Documented
 @Constraint(
-        validatedBy = {}
+        validatedBy = {PasswordValidator.class}
 )
 public @interface Password {
-    String message() default "{jakarta.validation.constraints.NotNull.message}";
+    String message() default ValicationConstants.VALIDATE_PASSWORD;
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
-    @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
-    @Retention(RetentionPolicy.RUNTIME)
-    @Documented
-    public @interface List {
-        Password[] value();
-    }
 }

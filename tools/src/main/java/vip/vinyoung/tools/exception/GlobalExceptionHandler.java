@@ -21,6 +21,9 @@ import vip.vinyoung.tools.bean.basic.ErrorResult;
 import vip.vinyoung.tools.enums.ErrorCode;
 import vip.vinyoung.tools.service.Log;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
@@ -62,15 +65,19 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
      */
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public CommonResult<String> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public CommonResult<List<ErrorResult>> methodArgumentNotValidException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
-        StringBuilder sb = new StringBuilder("校验失败:");
+        List<ErrorResult> errorList = new LinkedList<>();
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            sb.append(fieldError.getField()).append("：").append(fieldError.getDefaultMessage()).append(", ");
+            String errorCode = fieldError.getDefaultMessage();
+            String field = fieldError.getField();
+            ErrorCode error = ErrorCode.getByCode(errorCode);
+            // TODO 日志占位符替换存在问题
+            ErrorResult errorResult = new ErrorResult(error, field);
+            errorList.add(errorResult);
         }
-        String msg = sb.toString();
-        error(EVENT_FAILURE, msg);
-        return CommonResult.failed(msg);
+        error(EVENT_FAILURE, errorList);
+        return CommonResult.failed(errorList);
     }
 
     /**

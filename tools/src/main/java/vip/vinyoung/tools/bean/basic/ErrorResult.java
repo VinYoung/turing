@@ -3,8 +3,11 @@ package vip.vinyoung.tools.bean.basic;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import vip.vinyoung.tools.enums.ErrorCode;
 import vip.vinyoung.tools.utils.CommonUtils;
+
+import java.text.MessageFormat;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -30,6 +33,11 @@ public class ErrorResult {
         this.errorCode = errorCode.getErrorCode();
         this.errorMsg = errorCode.getErrorMsg();
         this.enErrorMsg = errorCode.getEnErrorMsg();
+    }
+
+    public ErrorResult(ErrorCode errorCode, String... fieldNames) {
+        this(errorCode.getErrorCode(), MessageFormat.format(errorCode.getErrorMsg(), fieldNames),
+                String.format(errorCode.getEnErrorMsg(), fieldNames));
     }
 }
 
