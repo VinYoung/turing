@@ -2,10 +2,12 @@ package vip.vinyoung.tools.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import vip.vinyoung.tools.config.Constants;
 
+import java.util.Locale;
 import java.util.UUID;
 
 @Slf4j
@@ -72,5 +74,19 @@ public class CommonUtils {
      */
     public static void removeTimestamp() {
         MDC.remove(Constants.REQUEST_TIMESTAMP);
+    }
+
+    /**
+     * 删除已保存的前端时间戳
+     * <br>
+     *
+     * @author vinyoung
+     */
+    public static String format(String s, Object... values) {
+        if (StringUtils.isEmpty(s)) {
+            return s;
+        }
+        s = s.replaceAll("\\{}", "%s");
+        return String.format(Locale.ENGLISH, s, values);
     }
 }

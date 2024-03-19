@@ -72,7 +72,6 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
             String errorCode = fieldError.getDefaultMessage();
             String field = fieldError.getField();
             ErrorCode error = ErrorCode.getByCode(errorCode);
-            // TODO 日志占位符替换存在问题
             ErrorResult errorResult = new ErrorResult(error, field);
             errorList.add(errorResult);
         }

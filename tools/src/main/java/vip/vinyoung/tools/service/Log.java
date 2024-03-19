@@ -3,6 +3,7 @@ package vip.vinyoung.tools.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vip.vinyoung.tools.bean.basic.LogDetail;
+import vip.vinyoung.tools.utils.CommonUtils;
 
 public interface Log {
     default Logger getLogger() {
@@ -51,7 +52,6 @@ public interface Log {
      * @author wangyunshu
      */
     static String getMessage(String _msg, Object... values) {
-        _msg.replaceAll("\\{}", "%s");
-        return String.format(_msg, values);
+        return CommonUtils.format(_msg, values);
     }
 }
