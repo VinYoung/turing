@@ -1,20 +1,13 @@
 package vip.vinyoung.tools.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
-import org.springframework.stereotype.Component;
 import vip.vinyoung.tools.config.Constants;
-
 import java.util.Locale;
 import java.util.UUID;
 
-@Slf4j
-@Component
 public class CommonUtils {
-    private final static int DEFAULT_VERIFICATION_CODE_LENGTH = 6;
-
     /**
      * 获取32位uuid
      * <br>
