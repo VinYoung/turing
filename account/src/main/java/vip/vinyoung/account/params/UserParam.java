@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import vip.vinyoung.tools.annotation.validation.Password;
 import vip.vinyoung.tools.config.ValicationConstants;
+import vip.vinyoung.tools.config.valication.group.RegisterGroup;
 
 @Data
 @ApiModel("用户基本入参")
@@ -19,7 +20,7 @@ public class UserParam {
     /**
      * 用户名
      */
-    @NotNull(message = ValicationConstants.VALIDATE_NOTNULL)
+    @NotNull(message = ValicationConstants.VALIDATE_NOTNULL, groups = RegisterGroup.class)
     @JsonProperty("user_name")
     private String userName;
 
@@ -32,7 +33,7 @@ public class UserParam {
     /**
      * 密码
      */
-    @NotNull(message = ValicationConstants.VALIDATE_NOTNULL)
+    @NotNull(message = ValicationConstants.VALIDATE_NOTNULL, groups = RegisterGroup.class)
     @Password
     @JsonProperty("password")
     private String password;
@@ -46,14 +47,14 @@ public class UserParam {
     /**
      * 有效时间
      */
-    @NotNull(message = ValicationConstants.VALIDATE_NOTNULL)
+    @NotNull(message = ValicationConstants.VALIDATE_NOTNULL, groups = RegisterGroup.class)
     @JsonProperty("effective_time")
     private String effectiveTime;
 
     /**
      * 邮箱
      */
-    @NotNull(message = ValicationConstants.VALIDATE_NOTNULL)
+    @NotNull(message = ValicationConstants.VALIDATE_NOTNULL, groups = RegisterGroup.class)
     @JsonProperty("email")
     private String email;
 

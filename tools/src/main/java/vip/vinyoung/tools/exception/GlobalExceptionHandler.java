@@ -20,8 +20,6 @@ import vip.vinyoung.tools.bean.basic.CommonResult;
 import vip.vinyoung.tools.bean.basic.ErrorResult;
 import vip.vinyoung.tools.enums.ErrorCode;
 import vip.vinyoung.tools.service.Log;
-
-import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
@@ -60,25 +58,27 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
     }
 
     /**
-     * 入参异常统一处理
+     * 入参异常统一处理，使用快速失败模式，故至多只有单个校验错误
      *
      * @param e 异常信息
      * @return 返回体
      */
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public CommonResult<List<ErrorResult>> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ResponseEntity<ErrorResult> methodArgumentNotValidException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
-        List<ErrorResult> errorList = new LinkedList<>();
-        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        if (!fieldErrors.isEmpty()) {
+            FieldError fieldError = fieldErrors.get(0);
             String errorCode = fieldError.getDefaultMessage();
             String field = fieldError.getField();
             ErrorCode error = ErrorCode.getByCode(errorCode);
             ErrorResult errorResult = new ErrorResult(error, field);
-            errorList.add(errorResult);
+            error(EVENT_FAILURE, errorCode);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);
         }
-        error(EVENT_FAILURE, errorList);
-        return CommonResult.failed(errorList);
+        error("Failed to obtain parameter verification results");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResult(ErrorCode.VALIDATE_ERROR));
     }
 
     /**

@@ -9,4 +9,5 @@ package vip.vinyoung.tools.config;
 public interface ValicationConstants {
     public static final String VALIDATE_PASSWORD = "VALIDATE_PASSWORD";
     public static final String VALIDATE_NOTNULL = "VALIDATE_NOTNULL";
+    public static final String VALIDATE_ERROR = "VALIDATE_ERROR";
 }
