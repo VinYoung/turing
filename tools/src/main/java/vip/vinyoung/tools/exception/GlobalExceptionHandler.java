@@ -36,7 +36,8 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
-            Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+                                  Class<? extends HttpMessageConverter<?>> selectedConverterType,
+                                  ServerHttpRequest request, ServerHttpResponse response) {
         if (body instanceof CommonResult) {
             HttpStatus code = ((CommonResult<?>) body).getCode();
             response.setStatusCode(code);
@@ -54,7 +55,8 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResult> exception(Exception e) {
         error(EVENT_FAILURE, e.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ErrorResult(ErrorCode.TURING_SYSTEM_001));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ErrorResult(ErrorCode.TURING_SYSTEM_001));
     }
 
     /**
@@ -89,8 +91,8 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<ErrorResult> ServiceException(ServiceException e) {
         error(EVENT_FAILURE, e.getMessage());
-        return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResult(e.getCode().getErrorCode(), e.getMessage(),
-                e.getEnMessage()));
+        return ResponseEntity.status(e.getHttpStatus())
+            .body(new ErrorResult(e.getCode().getErrorCode(), e.getMessage(), e.getEnMessage()));
     }
 
     @Override

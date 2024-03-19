@@ -11,10 +11,13 @@ import vip.vinyoung.tools.utils.CommonUtils;
 public class ErrorResult {
     @JsonProperty("error_code")
     private String errorCode;
+
     @JsonProperty("error_msg")
     private String errorMsg;
+
     @JsonProperty("en_error_msg")
     private String enErrorMsg;
+
     @JsonProperty("trace_id")
     private final String traceId;
 
@@ -34,7 +37,7 @@ public class ErrorResult {
 
     public ErrorResult(ErrorCode errorCode, String... fieldNames) {
         this(errorCode.getErrorCode(), CommonUtils.format(errorCode.getErrorMsg(), fieldNames),
-                CommonUtils.format(errorCode.getEnErrorMsg(), fieldNames));
+            CommonUtils.format(errorCode.getEnErrorMsg(), fieldNames));
     }
 }
 
