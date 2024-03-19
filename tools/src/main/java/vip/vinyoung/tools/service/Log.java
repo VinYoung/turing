@@ -47,10 +47,11 @@ public interface Log {
      * 日志内容格式化
      * <br>
      *
-     * @author wangyunshu
      * @return 替换占位符后的日志字符串
+     * @author wangyunshu
      */
     static String getMessage(String _msg, Object... values) {
+        _msg.replaceAll("\\{}", "%s");
         return String.format(_msg, values);
     }
 }
