@@ -37,7 +37,7 @@ public class RegisterController implements Log {
 
     @Operation(summary = "注册账号")
     @PostMapping("/register")
-    public CommonResult search(@RequestBody @Validated UserParam param) {
+    public CommonResult search(@RequestBody @Validated UserDetailParam param) {
         info("Account registration interface input parameters {}",
             param.getUserName()); // 账号体中绝大部分信息属于敏感信息，不打印入参的其他参数的日志
         List<String> tos = new ArrayList<>();
@@ -45,11 +45,5 @@ public class RegisterController implements Log {
         MailBasic mail = new MailBasic(tos, "测试", "我爱你");
         mailService.send(mail);
         return CommonResult.success();
-    }
-
-    public CommonResult search(@RequestBody @Validated UserDetailParam param) {
-        info("Account registration interface input parameters {}",
-            param.getUserName()); // 账号体中绝大部分信息属于敏感信息，不打印入参的其他参数的日志
-        return CommonResult.success(userInfoDao.select());
     }
 }
