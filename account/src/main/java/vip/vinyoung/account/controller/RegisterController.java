@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vip.vinyoung.account.bean.mail.MailBasic;
 import vip.vinyoung.account.dao.UserInfoDao;
-import vip.vinyoung.account.params.UserParam;
+import vip.vinyoung.account.params.UserDetailParam;
 import vip.vinyoung.account.service.MailService;
 import vip.vinyoung.tools.bean.basic.CommonResult;
 import vip.vinyoung.tools.service.Log;
@@ -45,5 +45,11 @@ public class RegisterController implements Log {
         MailBasic mail = new MailBasic(tos, "测试", "我爱你");
         mailService.send(mail);
         return CommonResult.success();
+    }
+
+    public CommonResult search(@RequestBody @Validated UserDetailParam param) {
+        info("Account registration interface input parameters {}",
+            param.getUserName()); // 账号体中绝大部分信息属于敏感信息，不打印入参的其他参数的日志
+        return CommonResult.success(userInfoDao.select());
     }
 }

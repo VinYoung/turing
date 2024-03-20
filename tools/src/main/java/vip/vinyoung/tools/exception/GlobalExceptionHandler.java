@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import vip.vinyoung.tools.bean.basic.CommonResult;
 import vip.vinyoung.tools.bean.basic.ErrorResult;
+import vip.vinyoung.tools.config.Constants;
 import vip.vinyoung.tools.enums.ErrorCode;
 import vip.vinyoung.tools.service.Log;
 import java.util.List;
@@ -74,7 +75,7 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
             String field = fieldError.getField();
             ErrorCode error = ErrorCode.getByCode(errorCode);
             ErrorResult errorResult = new ErrorResult(error, field);
-            error(EVENT_FAILURE, errorCode);
+            error(EVENT_FAILURE, field + Constants.SYMBOL_COLON + errorCode);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);
         }
         error("Failed to obtain parameter verification results");
@@ -91,8 +92,8 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<ErrorResult> ServiceException(ServiceException e) {
         error(EVENT_FAILURE, e.getMessage());
-        return ResponseEntity.status(e.getHttpStatus())
-            .body(new ErrorResult(e.getCode().getErrorCode(), e.getMessage(), e.getEnMessage()));
+        ErrorCode code = ErrorCode.getByCode(e.getCode());
+        return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResult(code));
     }
 
     @Override

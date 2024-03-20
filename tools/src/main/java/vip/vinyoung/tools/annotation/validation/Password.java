@@ -7,7 +7,7 @@ package vip.vinyoung.tools.annotation.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import vip.vinyoung.tools.config.ValicationConstants;
+import vip.vinyoung.tools.config.valication.ValicationConstants;
 import vip.vinyoung.tools.validator.PasswordValidator;
 
 import java.lang.annotation.*;
