@@ -16,7 +16,7 @@ public class UserParam {
     /**
      * 邮箱
      */
-    @Email(groups = RegisterGroup.class)
+    // @Email(groups = RegisterGroup.class)
     @JsonProperty("email")
     private String email;
 }

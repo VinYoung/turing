@@ -1,4 +1,4 @@
-package vip.vinyoung.account.bean.mail;
+package vip.vinyoung.tools.bean.mail;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

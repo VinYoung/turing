@@ -1,7 +1,7 @@
-package vip.vinyoung.account.service;
+package vip.vinyoung.tools.service;
 
 import org.springframework.stereotype.Service;
-import vip.vinyoung.account.bean.mail.MailBasic;
+import vip.vinyoung.tools.bean.mail.MailBasic;
 import vip.vinyoung.tools.exception.ServiceException;
 import java.util.List;
 

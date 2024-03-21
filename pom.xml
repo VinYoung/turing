@@ -125,6 +125,12 @@
             <version>8.0.1.Final</version>
         </dependency>
 
+        <!-- 邮件功能相关 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
     </dependencies>
 
     <distributionManagement>

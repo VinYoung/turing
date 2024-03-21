@@ -1,32 +1,32 @@
-package vip.vinyoung.account.service.impl;
+package vip.vinyoung.tools.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
-import vip.vinyoung.account.bean.mail.MailBasic;
-import vip.vinyoung.account.service.MailService;
+import org.springframework.stereotype.Component;
+import vip.vinyoung.tools.bean.mail.MailBasic;
+import vip.vinyoung.tools.config.JavaMailSenderConfig;
 import vip.vinyoung.tools.exception.ServiceException;
+import vip.vinyoung.tools.service.MailService;
 import java.util.List;
 
-@Service
+@Component
 @Slf4j
 public class MailServiceImpl implements MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${spring.mail.username}")
-    private String from;
+    @Autowired
+    private JavaMailSenderConfig javaMailSenderConfig;
 
     @Override
     public void send(MailBasic mail) throws ServiceException {
         //创建简单邮件消息
         SimpleMailMessage message = new SimpleMailMessage();
         //谁发的
-        message.setFrom(from);
+        message.setFrom(javaMailSenderConfig.getUsername());
         //谁要接收
         message.setTo(mail.getReceivers().get(0));
         //邮件标题
@@ -36,7 +36,7 @@ public class MailServiceImpl implements MailService {
         try {
             mailSender.send(message);
         } catch (MailException e) {
-            log.error("邮件发送失败！");
+            log.error("邮件发送失败 {}！", e.getMessage());
         }
     }
 
