@@ -24,12 +24,11 @@ public class JavaMailSenderConfig {
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        javaMailSender.setHost("smtp.qq.com");
-        javaMailSender.setProtocol("smtp");
-        javaMailSender.setDefaultEncoding("UTF-8");
-        javaMailSender.setUsername("601878125@qq.com");
-        javaMailSender.setPassword("gltbbdfhamoubffe");
-        javaMailSender.setPort(587);
+        javaMailSender.setHost(host);
+        javaMailSender.setProtocol(protocol);
+        javaMailSender.setDefaultEncoding(prodefaultEncodingtocol);
+        javaMailSender.setUsername(username);
+        javaMailSender.setPassword(password);
         return javaMailSender;
     }
 }

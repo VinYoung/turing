@@ -42,7 +42,7 @@ public class RegisterController implements Log {
         //     param.getUserName()); // 账号体中绝大部分信息属于敏感信息，不打印入参的其他参数的日志
         List<String> tos = new ArrayList<>();
         tos.add(param.getEmail());
-        MailBasic mail = new MailBasic(tos, "测试", "臭二娃");
+        MailBasic mail = new MailBasic(tos, "测试", "我爱你");
         mailService.send(mail);
         return CommonResult.success();
     }
