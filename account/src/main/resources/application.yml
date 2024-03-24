@@ -10,7 +10,11 @@ spring:
     group:
       local: public
   datasource:
-    url: jdbc:mysql://192.168.3.2:3306/archimedes?serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=UTF-8
-    driver-class-name: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://192.168.3.32:3306/account?serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: sakula424KA!@#
+    password: sakula424KA
+  data:
+    redis:
+      host: 192.168.3.32
+      port: 6379

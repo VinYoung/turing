@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="vip.vinyoung.account.dao.UserInfoDao">
-    <select id="select" resultType="integer">
+    <select id="select" resultType="java.lang.Integer">
         select count(*)
         from t_user;
     </select>
