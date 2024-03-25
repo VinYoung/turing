@@ -4,6 +4,7 @@ import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotNull;
 import org.redisson.api.RBucket;
 import org.redisson.api.RKeys;
+import org.redisson.api.RLock;
 import org.redisson.api.RSet;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * redis 工具类实现
  *
- * @author  wangyunshu
+ * @author wangyunshu
  * @since 2024-03-24
  */
 @Component
@@ -32,6 +33,21 @@ public class RedisHelper implements CacheHelper {
 
     public RedisHelper(RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
+    }
+
+    @Override
+    public RLock getLock(String key) {
+        return redissonClient.getLock(key);
+    }
+
+    @Override
+    public void unLock(RLock lock) {
+        if (lock == null) {
+            return;
+        }
+        if (lock.isLocked()) {
+            lock.unlock();
+        }
     }
 
     @Override

@@ -14,3 +14,8 @@ spring:
     #授权码
     password: sdxelsqergvrbdgj
     test-connection: true
+system:
+  internal:
+    secret: e9ZnRzYnDk6TyhXvLsQ3B7s8pVjwFc4J
+    admin:
+      id: af26a89c168946ce84041a08da148216

@@ -9,12 +9,30 @@
     </parent>
     <groupId>vip.vinyoung</groupId>
     <artifactId>tools</artifactId>
+    <properties>
+        <jjwt.version>0.9.1</jjwt.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
         </dependency>
+
+        <!-- jwt token -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+
+        <!-- cache tool -->
+        <dependency>
+            <groupId>vip.vinyoung</groupId>
+            <artifactId>cache</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>tools</finalName>

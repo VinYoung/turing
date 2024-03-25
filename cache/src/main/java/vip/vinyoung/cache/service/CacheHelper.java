@@ -3,10 +3,28 @@ package vip.vinyoung.cache.service;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RLock;
 import java.util.Set;
 
 public interface CacheHelper {
     long DEFAULT_CACHE_CYCLE = 14400L;
+
+    /**
+     * get lock
+     * <br>
+     *
+     * @author wangyunshu
+     * @return RLock
+     */
+    RLock getLock(String key);
+
+    /**
+     * put cache
+     * <br>
+     *
+     * @author wangyunshu
+     */
+    void unLock(RLock lock);
 
     /**
      * put cache

@@ -20,24 +20,17 @@ public class UserDetailParam extends UserParam {
     private String userId;
 
     /**
-     * 用户名
+     * 邮箱
      */
-    @UserName(groups = RegisterGroup.class)
-    @JsonProperty("user_name")
-    private String userName;
+    // @Email(groups = RegisterGroup.class)
+    @JsonProperty("email")
+    private String email;
 
     /**
      * 用户等于用的微信账号id
      */
     @JsonProperty("wechat_id")
     private String wechatId;
-
-    /**
-     * 密码
-     */
-    @Password
-    @JsonProperty("password")
-    private String password;
 
     /**
      * 状态

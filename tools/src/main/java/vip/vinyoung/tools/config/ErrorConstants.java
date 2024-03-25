@@ -9,4 +9,5 @@ package vip.vinyoung.tools.config;
 public interface ErrorConstants {
     String SYSTEM_001 = "SYSTEM_001";
     String ACCOUNT_001 = "ACCOUNT_001";
+    String ACCOUNT_CERTIFICATION = "ACCOUNT_CERTIFICATION";
 }
