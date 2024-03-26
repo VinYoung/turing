@@ -25,6 +25,8 @@ public class Constants {
 
     public static final String SYMBOL_AND = "&";
 
+    public static final String AT_SYMBOL = "@";
+
     public static final String SYMBOL_NEW_LINE = "\n";
 
     public static final String SYNOLOGY_API_AUTH = "webapi/auth.cgi";

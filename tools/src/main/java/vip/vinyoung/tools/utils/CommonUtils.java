@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import vip.vinyoung.tools.config.Constants;
+import vip.vinyoung.tools.enums.AccountEnum;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -81,5 +82,23 @@ public class CommonUtils {
         }
         s = s.replaceAll("\\{}", "%s");
         return String.format(Locale.ENGLISH, s, values);
+    }
+
+    /**
+     * 判断账号类型
+     * <br>
+     *
+     * @param account 账号
+     * @return 账号类型
+     * @author vinyoung
+     */
+    public static AccountEnum guessAccount(String account) {
+        if (StringUtils.isEmpty(account)) {
+            return AccountEnum.USER_NAME;
+        }
+        if (StringUtils.contains(account, Constants.AT_SYMBOL)) {
+            return AccountEnum.EMAIL;
+        }
+        return AccountEnum.USER_NAME;
     }
 }

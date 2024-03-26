@@ -7,4 +7,12 @@
         select count(*)
         from t_user;
     </select>
+
+    <select id="checkUserName" resultType="java.lang.String">
+        select user_id
+        from t_user
+        <where>
+            user_name = #{userName}
+        </where>;
+    </select>
 </mapper>
