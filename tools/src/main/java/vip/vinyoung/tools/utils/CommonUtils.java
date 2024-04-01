@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class CommonUtils {
+    private final static String PASSWORD_ERROR_KEY = "PasswordError_";
+
     /**
      * 获取32位uuid
      * <br>
@@ -100,5 +102,15 @@ public class CommonUtils {
             return AccountEnum.EMAIL;
         }
         return AccountEnum.USER_NAME;
+    }
+
+    /**
+     * 获取密码错误的redis key
+     * <br>
+     *
+     * @author wangyunshu
+     */
+    public static String getLoginPasswordErrorRedisKey(String id) {
+        return PASSWORD_ERROR_KEY.concat(id);
     }
 }

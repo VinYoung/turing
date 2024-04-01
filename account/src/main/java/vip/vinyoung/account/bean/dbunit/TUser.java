@@ -49,4 +49,9 @@ public class TUser extends BaseUnit {
      */
     private String comment;
 
+    /**
+     * 最后登录时间
+     */
+    private LocalDateTime lastLoginTime;
+
 }

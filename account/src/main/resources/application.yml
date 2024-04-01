@@ -20,3 +20,7 @@ spring:
       port: 6379
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
+account:
+  user:
+    lock_times: 5
+    lock_time: 5

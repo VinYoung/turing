@@ -3,16 +3,257 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="vip.vinyoung.account.dao.UserInfoDao">
-    <select id="select" resultType="java.lang.Integer">
-        select count(*)
-        from t_user;
-    </select>
+    <resultMap type="vip.vinyoung.account.bean.dbunit.TUser" id="TUserMap">
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="wechatId" column="wechat_id" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="effectiveTime" column="effective_time" jdbcType="DATE"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="DATE"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="DATE"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="baseColum">
+        user_id
+        ,user_name,wechat_id,status,effective_time,comment,create_by,create_time,update_by,update_time,last_login_time
+    </sql>
 
     <select id="checkUserName" resultType="java.lang.String">
         select user_id
         from t_user
         <where>
             user_name = #{userName}
-        </where>;
+        </where>
     </select>
+
+    <!-- 通过ID查询单条数据 -->
+    <select id="queryById" resultMap="TUserMap">
+        select
+        <include refid="baseColum"/>
+        from t_user
+        <where>
+            user_id = #{userId}
+        </where>
+    </select>
+
+    <!-- 通过用户名查询单条数据 -->
+    <select id="queryByUserName" resultMap="TUserMap">
+        select
+        <include refid="baseColum"/>
+        from t_user
+        <where>
+            user_name = #{userName}
+        </where>
+    </select>
+
+    <!-- 校验密码是否相同 -->
+    <select id="checkPassword" resultType="java.lang.String">
+        select
+        user_id
+        from t_user
+        <where>
+            user_id = #{userId}
+            and password = #{password}
+        </where>
+    </select>
+
+    <!--分页查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TUserMap">
+        select
+        user_id,user_name,wechat_id,password,status,effective_time,comment,create_by,create_time,update_by,update_time
+        from t_user
+        <where>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="wechatId != null and wechatId != ''">
+                and wechat_id = #{wechatId}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="effectiveTime != null and effectiveTime != ''">
+                and effective_time = #{effectiveTime}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from t_user
+        <where>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="wechatId != null and wechatId != ''">
+                and wechat_id = #{wechatId}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="effectiveTime != null and effectiveTime != ''">
+                and effective_time = #{effectiveTime}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增数据-->
+    <insert id="insert" keyProperty="user_id" useGeneratedKeys="true">
+        insert into t_user(user_id, user_name, wechat_id, password, status, effective_time, comment, create_by,
+                           create_time, update_by, update_time)
+        values (#{userId}, #{userName}, #{wechatId}, #{password}, #{status}, #{effectiveTime}, #{comment}, #{createBy},
+                #{createTime}, #{updateBy}, #{updateTime})
+    </insert>
+
+    <!-- 批量新增数据 -->
+    <insert id="insertBatch" keyProperty="user_id" useGeneratedKeys="true">
+        insert into
+        t_user(user_id,user_name,wechat_id,password,status,effective_time,comment,create_by,create_time,update_by,update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId},#{entity.userName},#{entity.wechatId},#{entity.password},#{entity.status},#{entity.effectiveTime},#{entity.comment},#{entity.createBy},#{entity.createTime},#{entity.updateBy},#{entity.updateTime})
+        </foreach>
+    </insert>
+
+    <!-- 批量新增或按主键更新数据 -->
+    <insert id="insertOrUpdateBatch" keyProperty="user_id" useGeneratedKeys="true">
+        insert into
+        t_user(user_id,user_name,wechat_id,password,status,effective_time,comment,create_by,create_time,update_by,update_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId},#{entity.userName},#{entity.wechatId},#{entity.password},#{entity.status},#{entity.effectiveTime},#{entity.comment},#{entity.createBy},#{entity.createTime},#{entity.updateBy},#{entity.updateTime})
+        </foreach>
+        on duplicate key update
+        user_id=values(user_id),
+        user_name=values(user_name),
+        wechat_id=values(wechat_id),
+        password=values(password),
+        status=values(status),
+        effective_time=values(effective_time),
+        comment=values(comment),
+        create_by=values(create_by),
+        create_time=values(create_time),
+        update_by=values(update_by),
+        update_time=values(update_time)
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update">
+        update t_user
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="wechatId != null and wechatId != ''">
+                wechat_id = #{wechatId},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="effectiveTime != null and effectiveTime != ''">
+                effective_time = #{effectiveTime},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from t_user
+        <where>
+            user_id = #{userId}
+        </where>
+    </delete>
+
+    <update id="lockUser">
+        update t_user
+        set status = -2
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
+    <update id="unlockUser">
+        update t_user
+        set status = 0
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
+    <update id="updateLoginTime">
+        update t_user
+        set last_login_time = #{lastLoginTime}
+        <where>
+            user_id = #{userId}
+        </where>
+    </update>
 </mapper>
