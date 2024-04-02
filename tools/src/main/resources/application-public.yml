@@ -14,6 +14,10 @@ spring:
     #授权码
     password: sdxelsqergvrbdgj
     test-connection: true
+  data:
+    redis:
+      host: 192.168.3.32
+      port: 6379
 system:
   internal:
     secret: e9ZnRzYnDk6TyhXvLsQ3B7s8pVjwFc4J

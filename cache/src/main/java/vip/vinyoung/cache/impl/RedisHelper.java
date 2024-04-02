@@ -9,6 +9,7 @@ import org.redisson.api.RSet;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import vip.vinyoung.cache.service.CacheHelper;
 import java.time.Instant;
@@ -21,8 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @author wangyunshu
  * @since 2024-03-24
  */
-@Component
-@Qualifier("cacheHelper")
+@Service
 public class RedisHelper implements CacheHelper {
     @Resource
     private RedissonClient redissonClient;

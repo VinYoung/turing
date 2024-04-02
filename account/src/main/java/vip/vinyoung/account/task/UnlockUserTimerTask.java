@@ -1,8 +1,8 @@
 package vip.vinyoung.account.task;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import vip.vinyoung.account.dao.UserInfoDao;
 import vip.vinyoung.tools.service.Log;
@@ -13,11 +13,15 @@ import java.util.TimerTask;
 public class UnlockUserTimerTask extends TimerTask implements Log {
     private String userId;
 
-    @Autowired
     private static UserInfoDao userInfoDao;
 
     public UnlockUserTimerTask() {
 
+    }
+
+    @Resource
+    public void setUserMapper(UserInfoDao userInfoDao) {
+        UnlockUserTimerTask.userInfoDao = userInfoDao;
     }
 
     public UnlockUserTimerTask(String userId) {

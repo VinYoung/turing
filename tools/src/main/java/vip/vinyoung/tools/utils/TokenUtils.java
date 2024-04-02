@@ -4,13 +4,14 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RLock;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import vip.vinyoung.cache.impl.RedisHelper;
+import org.springframework.stereotype.Service;
 import vip.vinyoung.cache.service.CacheHelper;
 import vip.vinyoung.tools.bean.jwt.JwtTokenBasic;
 import vip.vinyoung.tools.config.ErrorConstants;
@@ -21,6 +22,7 @@ import vip.vinyoung.tools.service.Log;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
+@Service
 public class TokenUtils implements Log {
     public static final long TOKEN_VALIDITY_TIME = TimeUnit.HOURS.toSeconds(4); // token的有效时间为4个小时
 
@@ -30,7 +32,8 @@ public class TokenUtils implements Log {
     @Value("${system.internal.secret}")
     private String SYSTEM_SECRET;
 
-    private CacheHelper cacheHelper = new RedisHelper();
+    @Resource
+    private CacheHelper cacheHelper;
 
     @Override
     public Logger getLogger() {

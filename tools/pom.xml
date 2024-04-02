@@ -11,6 +11,7 @@
     <artifactId>tools</artifactId>
     <properties>
         <jjwt.version>0.9.1</jjwt.version>
+        <jaxb.version>2.3.0</jaxb.version>
     </properties>
 
     <dependencies>
@@ -25,12 +26,18 @@
             <artifactId>jjwt</artifactId>
             <version>${jjwt.version}</version>
         </dependency>
+        <!-- jaxb -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb.version}</version>
+        </dependency>
 
         <!-- cache tool -->
         <dependency>
             <groupId>vip.vinyoung</groupId>
             <artifactId>cache</artifactId>
-            <version>1.0.0</version>
+            <version>0.0.1</version>
         </dependency>
 
     </dependencies>

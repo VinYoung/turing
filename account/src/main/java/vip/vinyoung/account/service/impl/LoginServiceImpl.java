@@ -1,11 +1,14 @@
 package vip.vinyoung.account.service.impl;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import vip.vinyoung.account.bean.dbunit.TUser;
 import vip.vinyoung.account.dao.UserContactInfoDao;
 import vip.vinyoung.account.dao.UserInfoDao;
@@ -28,23 +31,24 @@ import java.time.LocalDateTime;
 import java.util.Timer;
 
 @Slf4j
+@Service
 public class LoginServiceImpl implements LoginService, Log {
     @Value("$account.user.lock_times:5")
-    private int userErrorTimes;
+    private String userErrorTimes;
 
     @Value("$account.user.lock_time:5")
-    private int userErrorLockTime;
+    private String userErrorLockTime;
 
-    @Autowired
+    @Resource
     private UserContactInfoDao userContactInfoDao;
 
-    @Autowired
+    @Resource
     private UserInfoDao userInfoDao;
 
-    @Autowired
+    @Resource
     private CacheHelper cacheHelper;
 
-    @Autowired
+    @Resource
     private TokenUtils tokenUtils;
 
     @Override
@@ -70,19 +74,17 @@ public class LoginServiceImpl implements LoginService, Log {
             cacheHelper.remove(ParameterEnum.USER.name(), CommonUtils.getLoginPasswordErrorRedisKey(userId));
             String token = tokenUtils.createToken(new JwtTokenBasic().setSubject(user.getUserId()));
             userInfoDao.updateLoginTime(user.getUserId(), LocalDateTime.now());
-            // 重新缓存用户信息
-            cacheUser(info);
             return CommonResult.success(token);
         }
 
         // 登录密码错误
         int times = getPasswordErrorTimes(userId);
         info("用户: {} 第 {} 次登录密码错误.", userId, times);
-        if (times >= userErrorTimes) { // 1分钟内错误次数大于上限
+        if (times >= Integer.parseInt(userErrorTimes)) { // 1分钟内错误次数大于上限
             error("用户 {} 登录失败次数过多, 锁定用户 {} 分钟", userId, userErrorLockTime);
             // 锁定用户, lockTime分钟后解锁
             userInfoDao.lockUser(userId);
-            new Timer().schedule(new UnlockUserTimerTask(userId), userErrorLockTime * 60 * 1000L);
+            new Timer().schedule(new UnlockUserTimerTask(userId), Integer.parseInt(userErrorLockTime) * 60 * 1000L);
         }
         throw new AuthLoginException(ErrorConstants.PASSWORD_INCORRECT, HttpStatus.FORBIDDEN);
     }
@@ -91,16 +93,6 @@ public class LoginServiceImpl implements LoginService, Log {
     public CommonResult check(String account) {
         AccountEnum accountEnum = checkAccount(account);
         return CommonResult.success(!AccountEnum.NONE.equals(accountEnum));
-    }
-
-    public void cacheUser(TUser user) {
-        if (user == null) {
-            return;
-        }
-        String id = user.getUserId();
-        String infoJson = JsonUtils.toJsonString(info, SerializerFeature.WriteEnumUsingToString);
-        // id2info
-        cacheHelper.put(ParameterEnum.USER.name(), UserUtils.getUserIdRedisKey(id), infoJson, UserUtils.USER_INFO_DEFAULT_CACHE_TIME);
     }
 
     public int getPasswordErrorTimes(String userId) {

@@ -34,11 +34,6 @@
             <artifactId>tools</artifactId>
             <version>0.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>vip.vinyoung</groupId>
-            <artifactId>cache</artifactId>
-            <version>1.0.0</version>
-        </dependency>
     </dependencies>
 
     <build>

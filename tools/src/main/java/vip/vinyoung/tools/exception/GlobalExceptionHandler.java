@@ -54,6 +54,7 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResult> exception(Exception e) {
         error(EVENT_FAILURE, e.getMessage());
+        e.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(new ErrorResult(ErrorCode.TURING_SYSTEM_001));
     }

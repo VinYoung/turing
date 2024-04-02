@@ -3,9 +3,9 @@ package vip.vinyoung.account.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import vip.vinyoung.account.dao.UserInfoDao;
 import vip.vinyoung.account.params.basic.UserParam;
+import vip.vinyoung.account.service.LoginService;
 import vip.vinyoung.tools.bean.basic.CommonResult;
 import vip.vinyoung.tools.config.valication.group.DefaultGroup;
 import vip.vinyoung.tools.service.Log;
-import vip.vinyoung.tools.service.MailService;
 
 @Slf4j
 @RestController
@@ -30,17 +29,14 @@ public class LoginController implements Log {
         return log;
     }
 
-    @Autowired
-    UserInfoDao userInfoDao;
-
-    @Autowired
-    MailService mailService;
+    @Resource
+    LoginService loginService;
 
     @Operation(summary = "登录，并返回token")
     @PostMapping("/login")
     public CommonResult login(@RequestBody @Validated( {DefaultGroup.class}) UserParam param) {
         info("Login interface input parameters {}", param.getUserName()); // 账号体中绝大部分信息属于敏感信息，不打印入参的其他参数的日志
-        return CommonResult.success();
+        return loginService.login(param);
     }
 
     @ApiOperation("账号存在校验接口")
@@ -49,6 +45,6 @@ public class LoginController implements Log {
     @GetMapping("/check")
     public CommonResult check(@RequestParam("account") String account) {
         info("Account verification interface input parameters {}", account);
-        return CommonResult.success();
+        return loginService.check(account);
     }
 }

@@ -1,7 +1,7 @@
 package vip.vinyoung.tools.service.impl;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,10 +15,10 @@ import java.util.List;
 @Component
 @Slf4j
 public class MailServiceImpl implements MailService {
-    @Autowired
+    @Resource
     private JavaMailSender mailSender;
 
-    @Autowired
+    @Resource
     private JavaMailSenderConfig javaMailSenderConfig;
 
     @Override

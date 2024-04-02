@@ -34,7 +34,7 @@ public interface UserInfoDao {
      * @param password 密码
      * @return 查询回来的用户id
      */
-    String checkPassword(@Param("userName") String userName, @Param("password") String password);
+    String checkPassword(@Param("userId") String userId, @Param("password") String password);
 
     /**
      * 分页查询指定行数据

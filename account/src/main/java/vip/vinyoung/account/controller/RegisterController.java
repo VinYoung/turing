@@ -2,9 +2,9 @@ package vip.vinyoung.account.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,19 +27,17 @@ public class RegisterController implements Log {
         return log;
     }
 
-    @Autowired
+    @Resource
     UserInfoDao userInfoDao;
 
-    @Autowired
+    @Resource
     MailService mailService;
 
     @Operation(summary = "注册账号")
     @PostMapping("/register")
-    public CommonResult search(@RequestBody @Validated({DefaultGroup.class}) UserDetailParam param) {
+    public CommonResult search(@RequestBody @Validated( {DefaultGroup.class}) UserDetailParam param) {
         info("Account registration interface input parameters {}",
             param.getUserName()); // 账号体中绝大部分信息属于敏感信息，不打印入参的其他参数的日志
-        int select = userInfoDao.select();
-        info(Integer.toString(select));
         return CommonResult.success();
     }
 }
