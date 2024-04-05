@@ -49,6 +49,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.6.0</version>
                 <configuration>
+                    <mainClass>none</mainClass>
+                    <classifier>execute</classifier>
                     <outputDirectory>../packages</outputDirectory>
                 </configuration>
             </plugin>
