@@ -39,21 +39,5 @@
             <artifactId>cache</artifactId>
             <version>0.0.1</version>
         </dependency>
-
     </dependencies>
-    <build>
-        <finalName>tools</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.0</version>
-                <configuration>
-                    <mainClass>none</mainClass>
-                    <classifier>execute</classifier>
-                    <outputDirectory>../packages</outputDirectory>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

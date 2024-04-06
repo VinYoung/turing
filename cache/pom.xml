@@ -35,21 +35,4 @@
             <version>${lang3-version}</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <finalName>cache</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.0</version>
-                <configuration>
-                    <mainClass>none</mainClass>
-                    <classifier>execute</classifier>
-                    <outputDirectory>../packages</outputDirectory>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>
