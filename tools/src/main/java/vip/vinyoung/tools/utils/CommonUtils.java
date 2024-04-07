@@ -1,14 +1,29 @@
 package vip.vinyoung.tools.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.slf4j.MDC;
 import vip.vinyoung.tools.config.Constants;
 import vip.vinyoung.tools.enums.AccountEnum;
+import vip.vinyoung.tools.service.Log;
 import java.util.Locale;
 import java.util.UUID;
 
-public class CommonUtils {
+@Slf4j
+public class CommonUtils implements Log {
+    @Override
+    public Logger getLogger() {
+        return log;
+    }
+
+    private final static ObjectMapper OBJECT_MAPPER = new ObjectMapper().configure(
+        DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
     private final static String PASSWORD_ERROR_KEY = "PasswordError_";
 
     /**
@@ -102,6 +117,16 @@ public class CommonUtils {
             return AccountEnum.EMAIL;
         }
         return AccountEnum.USER_NAME;
+    }
+
+    public static String toJson(Object o) {
+        String json = "";
+        try {
+            json = OBJECT_MAPPER.writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            log.error("json 转换失败！");
+        }
+        return json;
     }
 
     /**
