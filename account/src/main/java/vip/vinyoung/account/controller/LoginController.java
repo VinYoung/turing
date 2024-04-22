@@ -40,8 +40,8 @@ public class LoginController implements Log {
     }
 
     @ApiOperation("账号存在校验接口")
-    @Operation(
-        summary = "</br>账号存在校验，用户可以使用邮箱或者用户名进行登录，服务测要区分邮箱还是用户名进行校验。校验结果返回前端true，</br>" + "</br>校验不通过则抛出账号不存在的异常</br>")
+    @Operation(summary = "</br>账号存在校验，用户可以使用邮箱或者用户名进行登录，服务测要区分邮箱还是用户名进行校验。校验结果返回前端true，</br>"
+        + "</br>校验不通过则抛出账号不存在的异常</br>")
     @GetMapping("/check")
     public CommonResult check(@RequestParam("account") String account) {
         info("Account verification interface input parameters {}", account);
