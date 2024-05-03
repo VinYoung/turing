@@ -1,5 +1,6 @@
 package vip.vinyoung.account.params.basic;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import jakarta.validation.constraints.NotEmpty;
@@ -28,6 +29,7 @@ public class UserParam {
      * 密码
      */
     @Password
+    @JsonIgnore
     @JsonProperty("password")
-    private String password;
+    private transient String password;
 }

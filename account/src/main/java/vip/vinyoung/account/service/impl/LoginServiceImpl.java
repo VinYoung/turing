@@ -55,7 +55,7 @@ public class LoginServiceImpl implements LoginService, Log {
     }
 
     @Override
-    public CommonResult login(UserParam param) {
+    public CommonResult<String> login(UserParam param) {
         String account = param.getAccount();
         AccountEnum accountEnum = CommonUtils.guessAccount(account);
         TUser user = queryUser(account, accountEnum);
@@ -89,7 +89,7 @@ public class LoginServiceImpl implements LoginService, Log {
     }
 
     @Override
-    public CommonResult check(String account) {
+    public CommonResult<Boolean> check(String account) {
         AccountEnum accountEnum = checkAccount(account);
         return CommonResult.success(!AccountEnum.NONE.equals(accountEnum));
     }

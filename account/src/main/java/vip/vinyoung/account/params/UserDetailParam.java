@@ -2,12 +2,9 @@ package vip.vinyoung.account.params;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import vip.vinyoung.account.params.basic.UserParam;
-import vip.vinyoung.tools.annotation.validation.Password;
-import vip.vinyoung.tools.annotation.validation.UserName;
-import vip.vinyoung.tools.config.valication.ValicationConstants;
+import vip.vinyoung.tools.annotation.validation.Email;
 import vip.vinyoung.tools.config.valication.group.RegisterGroup;
 
 @Data
@@ -22,7 +19,7 @@ public class UserDetailParam extends UserParam {
     /**
      * 邮箱
      */
-    // @Email(groups = RegisterGroup.class)
+    @Email(groups = RegisterGroup.class)
     @JsonProperty("email")
     private String email;
 
@@ -41,7 +38,6 @@ public class UserDetailParam extends UserParam {
     /**
      * 有效时间
      */
-    @NotNull(message = ValicationConstants.VALIDATE_NOTNULL, groups = RegisterGroup.class)
     @JsonProperty("effective_time")
     private String effectiveTime;
 

@@ -9,13 +9,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import vip.vinyoung.account.dao.UserInfoDao;
 import vip.vinyoung.account.params.UserDetailParam;
+import vip.vinyoung.account.service.RegisterService;
+import vip.vinyoung.tools.annotation.validation.Email;
 import vip.vinyoung.tools.bean.basic.CommonResult;
 import vip.vinyoung.tools.config.valication.group.DefaultGroup;
 import vip.vinyoung.tools.service.Log;
-import vip.vinyoung.tools.service.MailService;
+import vip.vinyoung.tools.utils.CommonUtils;
 
 @Slf4j
 @RestController
@@ -28,16 +30,19 @@ public class RegisterController implements Log {
     }
 
     @Resource
-    UserInfoDao userInfoDao;
+    RegisterService registerService;
 
-    @Resource
-    MailService mailService;
+    @Operation(summary = "邮箱校验并发送验证码")
+    @PostMapping("/mail/code")
+    public CommonResult mailCode(@RequestParam @Email String mailAddr) {
+        info("Account registration interface input parameters {}", mailAddr);
+        return registerService.mailCode(mailAddr);
+    }
 
     @Operation(summary = "注册账号")
     @PostMapping("/register")
     public CommonResult search(@RequestBody @Validated( {DefaultGroup.class}) UserDetailParam param) {
-        info("Account registration interface input parameters {}",
-            param.getUserName()); // 账号体中绝大部分信息属于敏感信息，不打印入参的其他参数的日志
-        return CommonResult.success();
+        info("Account registration interface input parameters {}", CommonUtils.toJson(param));
+        return registerService.register(param);
     }
 }
