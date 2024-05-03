@@ -4,10 +4,8 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import vip.vinyoung.account.bean.dbunit.TUser;
 import vip.vinyoung.account.dao.UserContactInfoDao;
@@ -33,10 +31,10 @@ import java.util.Timer;
 @Slf4j
 @Service
 public class LoginServiceImpl implements LoginService, Log {
-    @Value("$account.user.lock_times:5")
+    @Value("${account.user.lock_times:5}")
     private String userErrorTimes;
 
-    @Value("$account.user.lock_time:5")
+    @Value("${account.user.lock_time:5}")
     private String userErrorLockTime;
 
     @Resource
@@ -78,6 +76,7 @@ public class LoginServiceImpl implements LoginService, Log {
         }
 
         // 登录密码错误
+        userId = user.getUserId();
         int times = getPasswordErrorTimes(userId);
         info("用户: {} 第 {} 次登录密码错误.", userId, times);
         if (times >= Integer.parseInt(userErrorTimes)) { // 1分钟内错误次数大于上限

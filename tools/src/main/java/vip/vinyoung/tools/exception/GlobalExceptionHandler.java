@@ -106,7 +106,7 @@ public class GlobalExceptionHandler implements ResponseBodyAdvice<Object>, Log {
     @ResponseBody
     @ExceptionHandler(AuthLoginException.class)
     public ResponseEntity<ErrorResult> AuthLoginException(AuthLoginException e) {
-        error(EVENT_FAILURE, e.getMessage());
+        error(EVENT_FAILURE, e.getCode());
         ErrorCode code = ErrorCode.getByCode(e.getCode());
         return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResult(code));
     }

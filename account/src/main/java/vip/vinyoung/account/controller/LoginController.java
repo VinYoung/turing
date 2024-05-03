@@ -35,7 +35,7 @@ public class LoginController implements Log {
     @Operation(summary = "登录，并返回token")
     @PostMapping("/login")
     public CommonResult login(@RequestBody @Validated( {DefaultGroup.class}) UserParam param) {
-        info("Login interface input parameters {}", param.getUserName()); // 账号体中绝大部分信息属于敏感信息，不打印入参的其他参数的日志
+        info("Login interface input parameters {}", param.getAccount()); // 账号体中绝大部分信息属于敏感信息，不打印入参的其他参数的日志
         return loginService.login(param);
     }
 
