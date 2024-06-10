@@ -19,16 +19,32 @@ import vip.vinyoung.tools.enums.ParameterEnum;
 import vip.vinyoung.tools.exception.AuthLoginException;
 import vip.vinyoung.tools.exception.ServiceException;
 import vip.vinyoung.tools.service.Log;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * token工具类
+ *
+ * @since 2024-03-25
+ * @author Vin.Young
+ */
 @Slf4j
 @Service
 public class TokenUtils implements Log {
-    public static final long TOKEN_VALIDITY_TIME = TimeUnit.HOURS.toSeconds(4); // token的有效时间为4个小时
+    /**
+     * token在redis的过期时间，固定为4个小时
+     */
+    public static final long TOKEN_VALIDITY_TIME = TimeUnit.HOURS.toSeconds(4);
 
+    /**
+     * 超级账号ID
+     */
     @Value("${system.internal.admin.id}")
     private String INTERNAL_ADMIN_ID;
 
+    /**
+     * JWT公钥
+     */
     @Value("${system.internal.secret}")
     private String SYSTEM_SECRET;
 
@@ -47,6 +63,7 @@ public class TokenUtils implements Log {
 
     /**
      * 获取用户token, 有效期默认4个小时
+     * token目前仅包含userID的信息
      * <br>
      *
      * @author wangyunshu
@@ -57,6 +74,7 @@ public class TokenUtils implements Log {
             .setSubject(basic.getSubject())
             .setId(CommonUtils.uuid())
             .signWith(SignatureAlgorithm.HS512, SYSTEM_SECRET)
+            .setExpiration(new Date(TOKEN_VALIDITY_TIME))
             .compact();
         long expiration = basic.getExpiration();
         cacheHelper.put(ParameterEnum.USER.name(), token, String.valueOf(expiration), expiration);

@@ -1,7 +1,7 @@
 server:
   port: 9088
   servlet:
-    context-path: /account-center
+    context-path: /account-center/api
 spring:
   application:
     name: account
