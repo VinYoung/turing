@@ -3,7 +3,6 @@ package vip.vinyoung.tools.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -65,16 +64,6 @@ public class CommonUtils implements Log {
      */
     public static String getTraceId() {
         return MDC.get(Constants.TRACE_ID);
-    }
-
-    /**
-     * 获取request中前端请求时间戳
-     * <br>
-     *
-     * @author wangyunshu
-     */
-    public static void getTimestamp(HttpServletRequest request) {
-        MDC.put(Constants.REQUEST_TIMESTAMP, request.getParameter(Constants.REQUEST_TIMESTAMP));
     }
 
     /**

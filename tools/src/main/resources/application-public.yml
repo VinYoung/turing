@@ -23,3 +23,5 @@ system:
     secret: e9ZnRzYnDk6TyhXvLsQ3B7s8pVjwFc4J
     admin:
       id: af26a89c168946ce84041a08da148216
+logging:
+  config: classpath:log4j2.xml

@@ -1,22 +1,9 @@
-server:
-  port: 9088
-  servlet:
-    context-path: /account-center/api
 spring:
   application:
     name: account
   profiles:
-    active: local
+    active: dev
     group:
-      local: public
-  datasource:
-    url: jdbc:mysql://192.168.3.32:3306/account?serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=UTF-8
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: sakula424KA
-mybatis:
-  mapper-locations: classpath*:mapper/*.xml
-account:
-  user:
-    lock_times: 5
-    lock_time: 5
+      dev:
+        - dev
+        - public

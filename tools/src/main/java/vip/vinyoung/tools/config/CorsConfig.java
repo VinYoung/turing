@@ -6,6 +6,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+/**
+ * 跨域配置
+ *
+ * TODO 后续会使用nginx进行反向代理，就不需要在后端进行跨域配置
+ */
 @Configuration
 public class CorsConfig {
 
